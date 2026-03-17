@@ -1,0 +1,5 @@
+curve,x_column,y_column,area
+SSE_n44_des,cathode TotalCurrent(SSE_n44_des) X,cathode TotalCurrent(SSE_n44_des) Y,9.839786454585922e-16
+SSE_n45_des,cathode TotalCurrent(SSE_n45_des) X,cathode TotalCurrent(SSE_n45_des) Y,9.698185190575934e-16
+SSE_n47_des,cathode TotalCurrent(SSE_n47_des) X,cathode TotalCurrent(SSE_n47_des) Y,9.501830954839122e-16
+SSE_n48_des,cathode TotalCurrent(SSE_n48_des) X,cathode TotalCurrent(SSE_n48_des) Y,1.1493726864431637e-15

@@ -1,0 +1,61 @@
+# ==============================================================
+#  vis.mac — Visualization for BSE Detector (Geant4 11.x)
+#  Author: ChatGPT (2025)
+# ==============================================================
+
+/control/verbose 1
+/run/verbose 1
+/vis/verbose warnings
+
+# 打开 OpenGL 可视化系统
+/vis/open OGL 1000x800-0+0
+/control/echo [Visualization Initialized]
+
+# 绘制所有几何体
+/vis/drawVolume
+
+# ==============================================================
+#  几何体颜色设置 (逻辑体名需与 DetectorConstruction.cc 一致)
+# ==============================================================
+
+# --- 世界盒 (灰色线框) ---
+/vis/geometry/set/colour World 0.6 0.6 0.6 0.5
+/vis/geometry/set/visibility World 1
+
+# --- silicon detector (半透明蓝色) ---
+/vis/geometry/set/colour SiDetector 0.0 0.0 1.0 0.5
+/vis/geometry/set/visibility SiDetector 1
+
+# ==============================================================
+#  轨迹与事件显示
+# ==============================================================
+
+# 添加粒子轨迹（平滑曲线）
+/vis/scene/add/trajectories smooth
+/vis/modeling/trajectories/create/drawByCharge
+/vis/modeling/trajectories/drawByCharge-0/default/setDrawStepPts true
+/vis/modeling/trajectories/drawByCharge-0/default/setStepPtsSize 2
+
+
+# 每个事件结束后保留轨迹
+/vis/scene/endOfEventAction accumulate
+
+# ==============================================================
+#  视角与显示控制
+# ==============================================================
+
+# 设置观察角度与缩放
+/vis/viewer/set/viewpointThetaPhi 80 20
+/vis/viewer/zoom 6
+
+# 使用实体模式显示
+/vis/viewer/set/style surface
+
+# 添加坐标轴与边界盒
+/vis/scene/add/axes 0 0 0 8 mm
+/vis/scene/add/extent
+
+# 更新视图
+/vis/viewer/update
+/control/echo [Visualization Ready!]
+

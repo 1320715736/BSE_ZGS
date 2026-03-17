@@ -1,0 +1,9 @@
+/run/initialize
+
+/process/list
+/process/setVerbose 1 StepLimiter
+
+/gps/particle e-
+/gps/energy 100 keV
+/run/printProgress 20
+/run/beamOn 10000
