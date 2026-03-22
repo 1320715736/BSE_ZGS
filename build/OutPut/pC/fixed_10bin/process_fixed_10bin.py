@@ -17,7 +17,7 @@ LATERAL_SPREAD_UM = 0.1
 
 def main() -> None:
     base_dir = Path(__file__).resolve().parent
-    input_csv = base_dir.parent / "step_data.csv"
+    input_csv = base_dir.parent.parent / "step_data.csv"
 
     output_csv = base_dir / "step_profile_10bin.csv"
     output_png = base_dir / "bragg_let_10bin.png"

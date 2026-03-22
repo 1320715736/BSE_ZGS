@@ -1,6 +1,6 @@
 # fixed_20bin 说明（按 fixed_5bin 逻辑，固定 20 bin）
 
-本目录脚本基于 `../step_data.csv`，采用固定规则：
+本目录脚本基于 `../../step_data.csv`，采用固定规则：
 - `Dmax = 60 um`
 - `Nevents = 10000`
 - `N = 20`，`dz = Dmax / N = 3 um`

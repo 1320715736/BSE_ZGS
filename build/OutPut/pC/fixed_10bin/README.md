@@ -1,6 +1,6 @@
 # fixed_10bin 说明（严格图中规则）
 
-本目录脚本基于 `../step_data.csv`，采用固定规则：
+本目录脚本基于 `../../step_data.csv`，采用固定规则：
 - `Dmax = 60 um`
 - `Nevents = 10000`
 - `N = 10`，`dz = Dmax / N`
