@@ -1,0 +1,3 @@
+z_center_cm 0.003
+LET_pairs_cm3 8559893314.44
+LateralSpread_cm 0.0125202199803

@@ -29,8 +29,8 @@ PrimaryGeneratorAction::PrimaryGeneratorAction() {
     posDist->SetPosDisType("Plane");      // 平面分布
     posDist->SetPosDisShape("Square");    // 方形面
     posDist->SetCentreCoords(G4ThreeVector(0, 0, 0.3 * mm));  // 稍高于样品表面
-    posDist->SetHalfX(0.15 * mm);          // 8 mm 宽
-    posDist->SetHalfY(0.15* mm);          // 8 mm 高
+    posDist->SetHalfX(0.15 * mm);          // 0.3 mm 宽
+    posDist->SetHalfY(0.15* mm);          // 0.3 mm 高
 }
 
 PrimaryGeneratorAction::~PrimaryGeneratorAction() {

@@ -1,0 +1,2 @@
+z_left_um,z_right_um,z_center_um,z_center_cm,bin_width_um,Count,Edep_sum_keV,LET_keV_per_um,LET_pairs_cm3,LateralSpread_um,LateralSpread_cm
+0.0,60.0,30.0,0.003,60.0,168200.0,910733.383655,1.5178889727583333,8559893314.443791,125.20219980253131,0.012520219980253131
