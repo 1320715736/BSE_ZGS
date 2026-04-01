@@ -22,9 +22,9 @@
 /vis/geometry/set/colour World 0.6 0.6 0.6 0.5
 /vis/geometry/set/visibility World 1
 
-# --- silicon detector (半透明蓝色) ---
-/vis/geometry/set/colour SiDetector 0.0 0.0 1.0 0.5
-/vis/geometry/set/visibility SiDetector 1
+# --- SiC detector (半透明蓝色) ---
+/vis/geometry/set/colour SiCDetector 0.0 0.0 1.0 0.5
+/vis/geometry/set/visibility SiCDetector 1
 
 # ==============================================================
 #  轨迹与事件显示
@@ -58,4 +58,3 @@
 # 更新视图
 /vis/viewer/update
 /control/echo [Visualization Ready!]
-

@@ -24,13 +24,13 @@ PrimaryGeneratorAction::PrimaryGeneratorAction() {
     // 粒子方向：垂直入射
     fParticleSource->GetCurrentSource()->GetAngDist()->SetParticleMomentumDirection(G4ThreeVector(0, 0, -1));
 
-    // === 修改为平面源 ===
+    // 10 nm x 10 nm 的方形平面源
     auto posDist = fParticleSource->GetCurrentSource()->GetPosDist();
     posDist->SetPosDisType("Plane");      // 平面分布
     posDist->SetPosDisShape("Square");    // 方形面
     posDist->SetCentreCoords(G4ThreeVector(0, 0, 0.3 * mm));  // 稍高于样品表面
-    posDist->SetHalfX(0.15 * mm);          // 0.3 mm 宽
-    posDist->SetHalfY(0.15* mm);          // 0.3 mm 高
+    posDist->SetHalfX(5.0 * nm);         // 10 nm 宽
+    posDist->SetHalfY(5.0 * nm);         // 10 nm 高
 }
 
 PrimaryGeneratorAction::~PrimaryGeneratorAction() {
@@ -45,4 +45,3 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
 G4String PrimaryGeneratorAction::GetCurrentParticleName() const {
     return fParticleSource->GetParticleDefinition()->GetParticleName();
 }
-

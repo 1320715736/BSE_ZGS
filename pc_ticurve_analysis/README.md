@@ -6,7 +6,7 @@
 
 ## 运行
 ```bash
-cd /home/ubuntu/BSE_ZGS/ticurve_analysis
+cd /home/ubuntu/BSE_XK/ticurve_analysis
 /usr/bin/python3 plot_ticurve_and_integrate.py
 ```
 

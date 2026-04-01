@@ -16,7 +16,7 @@ struct EventFeatures {
   G4double incidentEnergy_keV;     // 入射能量
   G4double totalEdep_keV;          // 总能量沉积
   G4double maxDepthAl_um;          // 铝层最大深度
-  G4double maxDepthSi_um;          // 硅层最大深度
+  G4double maxDepthSiC_um;         // SiC 层最大深度
   G4double trackLength_mm;         // 总径迹长度
   G4int    nSteps;                 // 总步数
   G4int    nSecondaries;           // 产生的二次粒子数
@@ -39,12 +39,12 @@ private:
   // 原有统计：事件最大深度与入射能量
   // ===============================
   std::map<G4int, G4double> eventMaxDepthAlUm;  // 每个 event 铝层最大深度
-  std::map<G4int, G4double> eventMaxDepthSiUm;  // 每个 event 硅层最大深度
+  std::map<G4int, G4double> eventMaxDepthSiCUm; // 每个 event SiC 层最大深度
   std::map<G4int, G4double> eventIncidentKeV;   // 每个 event 入射能量
 
   // 能量桶（静态，Run 层面）
   static std::map<G4double, std::vector<G4double>> energyBucketsAl;
-  static std::map<G4double, std::vector<G4double>> energyBucketsSi;
+  static std::map<G4double, std::vector<G4double>> energyBucketsSiC;
 
   static G4double BucketizeEnergy(G4double keV) {
     return std::round(keV * 10.0) / 10.0; // 0.1 keV 分桶

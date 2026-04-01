@@ -1,2 +1,2 @@
-z_eq_um,LET_eq_pC_per_um,LET_eq_keV_per_um,E_sum_keV,Dmax_um,Nevents,LateralSpread_um
-60.0,6.755350680999067e-05,1.5178889727583333,910733.383655,60.0,10000,0.1
+z_center_um,LET_pC_per_um,LET_keV_per_um,E_sum_keV,Dmax_um,Nevents,LateralSpread_um
+40.0,0.00010311176289281741,2.3168628136049993,926745.1254419998,40.0,10000,0.1

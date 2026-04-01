@@ -7,12 +7,27 @@ import pandas as pd
 
 
 BIN_COUNT = 5
-DMAX_UM = 60.0
+MAJORITY_QUANTILE = 0.95
 NEVENTS = 10000
 W_EH_EV = 3.6
 E_CHARGE_C = 1.602176634e-19
 KEV_TO_PC = (1000.0 / W_EH_EV) * E_CHARGE_C * 1e12
 LATERAL_SPREAD_UM = 0.1
+
+
+def estimate_dmax_um(df: pd.DataFrame) -> float:
+    primary = df[
+        (df["ParticleName"] == "e-")
+        & (df["TrackID"] == 1)
+        & (df["ParentID"] == 0)
+        & (df["Depth_um"] >= 0.0)
+    ]
+    if primary.empty:
+        return 60.0
+
+    event_max_depth = primary.groupby("EventID")["Depth_um"].max()
+    q_um = float(event_max_depth.quantile(MAJORITY_QUANTILE))
+    return float(np.ceil(q_um))
 
 
 def main() -> None:
@@ -23,14 +38,22 @@ def main() -> None:
     output_png = base_dir / "bragg_let_5bin.png"
     output_txt = base_dir / "sentaurus_input_5bin_for_sentaurus.txt"
 
-    df = pd.read_csv(input_csv, usecols=["Depth_um", "Edep_keV"])
+    df = pd.read_csv(
+        input_csv,
+        usecols=["EventID", "ParticleName", "TrackID", "ParentID", "Depth_um", "Edep_keV"],
+    )
+    df["EventID"] = pd.to_numeric(df["EventID"], errors="coerce")
+    df["TrackID"] = pd.to_numeric(df["TrackID"], errors="coerce")
+    df["ParentID"] = pd.to_numeric(df["ParentID"], errors="coerce")
     df["Depth_um"] = pd.to_numeric(df["Depth_um"], errors="coerce")
     df["Edep_keV"] = pd.to_numeric(df["Edep_keV"], errors="coerce")
-    df = df.dropna(subset=["Depth_um", "Edep_keV"])
-    df = df[(df["Depth_um"] >= 0.0) & (df["Depth_um"] < DMAX_UM) & (df["Edep_keV"] >= 0.0)]
+    df = df.dropna(subset=["EventID", "TrackID", "ParentID", "Depth_um", "Edep_keV"])
 
-    dz = DMAX_UM / BIN_COUNT
-    edges = np.linspace(0.0, DMAX_UM, BIN_COUNT + 1)
+    dmax_um = estimate_dmax_um(df)
+    df = df[(df["Depth_um"] >= 0.0) & (df["Depth_um"] < dmax_um) & (df["Edep_keV"] >= 0.0)]
+
+    dz = dmax_um / BIN_COUNT
+    edges = np.linspace(0.0, dmax_um, BIN_COUNT + 1)
     df["bin"] = pd.cut(df["Depth_um"], bins=edges, right=False, include_lowest=True)
 
     grouped = (
@@ -64,7 +87,7 @@ def main() -> None:
     fig, axes = plt.subplots(2, 1, figsize=(9, 7), sharex=True)
     axes[0].plot(grouped["z_center_um"], grouped["LET_keV_per_um"], color="tab:blue", marker="o", lw=1.7)
     axes[0].set_ylabel("LET (keV/um)")
-    axes[0].set_title(f"Image-rule Profile (N={BIN_COUNT}, Dmax={DMAX_UM} um, Nevents={NEVENTS})")
+    axes[0].set_title(f"Image-rule Profile (N={BIN_COUNT}, Dmax={dmax_um} um, Nevents={NEVENTS})")
     axes[0].grid(alpha=0.3)
 
     axes[1].plot(grouped["z_center_um"], grouped["LET_pC_per_um"], color="tab:red", marker="o", lw=1.7)
@@ -85,6 +108,7 @@ def main() -> None:
     print(f"csv: {output_csv}")
     print(f"png: {output_png}")
     print(f"txt: {output_txt}")
+    print(f"Dmax_um(q{int(MAJORITY_QUANTILE*100)}): {dmax_um:.12g}")
     print(f"bins: {len(grouped)}")
 
 

@@ -14,7 +14,7 @@
 // 静态成员定义
 // =========================
 std::map<G4double, std::vector<G4double>> BSESensitiveDetector::energyBucketsAl;
-std::map<G4double, std::vector<G4double>> BSESensitiveDetector::energyBucketsSi;
+std::map<G4double, std::vector<G4double>> BSESensitiveDetector::energyBucketsSiC;
 
 // CSV 文件流
 std::ofstream BSESensitiveDetector::s_eventFile;
@@ -44,7 +44,7 @@ void BSESensitiveDetector::InitCSVFiles() {
   }
 
   // 写入事件级CSV表头
-  s_eventFile << "EventID,ParticleName,IncidentEnergy_keV,TotalEdep_keV,MaxDepthSi_um,"
+  s_eventFile << "EventID,ParticleName,IncidentEnergy_keV,TotalEdep_keV,MaxDepthSiC_um,"
               << "TrackLength_mm,NumSteps,NumSecondaries,MeanEdepPerStep_keV,EdepStdDev_keV,"
               << "ParticleStopped,FinalKineticEnergy_keV,EnergyEscapeFraction,"
               << "BraggPeakDepth_um,BraggPeakIntensity_keV,SecondaryTypes" << std::endl;
@@ -202,11 +202,11 @@ G4bool BSESensitiveDetector::ProcessHits(G4Step* step, G4TouchableHistory*) {
   features.nSteps++;
   features.trackLength_mm += stepLength_mm;
 
-  if (volumeName.contains("Si")) {
-    if (depth_um > eventMaxDepthSiUm[eventID]) {
-      eventMaxDepthSiUm[eventID] = depth_um;
+  if (volumeName.contains("SiC")) {
+    if (depth_um > eventMaxDepthSiCUm[eventID]) {
+      eventMaxDepthSiCUm[eventID] = depth_um;
     }
-    features.maxDepthSi_um = eventMaxDepthSiUm[eventID];
+    features.maxDepthSiC_um = eventMaxDepthSiCUm[eventID];
   }
 
   eventEdepList[eventID].push_back(edep_keV);
@@ -294,7 +294,7 @@ void BSESensitiveDetector::EndOfEvent(G4HCofThisEvent*) {
                 << features.particleName << ","
                 << features.incidentEnergy_keV << ","
                 << features.totalEdep_keV << ","
-                << features.maxDepthSi_um << ","
+                << features.maxDepthSiC_um << ","
                 << features.trackLength_mm << ","
                 << features.nSteps << ","
                 << features.nSecondaries << ","
@@ -312,7 +312,7 @@ void BSESensitiveDetector::EndOfEvent(G4HCofThisEvent*) {
   eventFeaturesMap.erase(eventID);
   eventEdepList.erase(eventID);
   eventIncidentKeV.erase(eventID);
-  eventMaxDepthSiUm.erase(eventID);
+  eventMaxDepthSiCUm.erase(eventID);
   eventMaxDepthAlUm.erase(eventID);
   eventParticleType.erase(eventID);
   eventDepthList.erase(eventID);

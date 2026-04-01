@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 # Setup the project
 cmake_minimum_required(VERSION 3.16...3.21)
-project(silicon_detector20251203)
+project(sic_detector20251203)
 #----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
 # You can set WITH_GEANT4_UIVIS to OFF via the command line or ccmake/cmake-gui
@@ -38,22 +38,22 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
-add_executable(silicon_detector silicon_detector.cc ${sources} ${headers})
-target_link_libraries(silicon_detector ${Geant4_LIBRARIES})
+add_executable(sic_detector sic_detector.cc ${sources} ${headers})
+target_link_libraries(sic_detector ${Geant4_LIBRARIES})
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
 # build B1. This is so that we can run the executable directly because it
 # relies on these scripts being in the current working directory.
 #
-set(silicon_detector20251203_SCRIPTS
+set(sic_detector20251203_SCRIPTS
   
   init_vis.mac
   vis.mac
   
   )
 
-foreach(_script ${silicon_detector20251203_SCRIPTS})
+foreach(_script ${sic_detector20251203_SCRIPTS})
   configure_file(
     ${PROJECT_SOURCE_DIR}/${_script}
     ${PROJECT_BINARY_DIR}/${_script}
@@ -65,9 +65,9 @@ endforeach()
 # For internal Geant4 use - but has no effect if you build this
 # example standalone
 #
-add_custom_target(silicon_detector20251203 DEPENDS detector20251203)
+add_custom_target(sic_detector20251203 DEPENDS sic_detector)
 
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
-install(TARGETS silicon_detector DESTINATION bin)
+install(TARGETS sic_detector DESTINATION bin)

@@ -1,4 +1,4 @@
-cd /home/ubuntu/BSE_ZGS/build
+cd /home/ubuntu/BSE_XK/build
 make
-./silicon_detector ../quick_test.mac
+./sic_detector ../quick_test.mac
 #OutPut file在build文件夹下查看

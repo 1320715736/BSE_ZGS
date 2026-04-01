@@ -29,17 +29,22 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
                                        "World", 0, false, 0);
 
     //-------------------------------
-    // 2. 硅探测器体 (纯硅单层结构)
+    // 2. SiC 探测器体（单层结构）
     //-------------------------------
     G4double detXY = 400 * um;
     G4double detThickness = 400 * um;
 
-    // 使用高阻硅 (简化为纯硅)
-    G4Material* silicon = nist->FindOrBuildMaterial("G4_Si");
+    // 使用 SiC（碳化硅）
+    auto* elementSi = nist->FindOrBuildElement("Si");
+    auto* elementC = nist->FindOrBuildElement("C");
+    G4double sicDensity = 3.21 * g / cm3;
+    auto* sicMaterial = new G4Material("SiC", sicDensity, 2);
+    sicMaterial->AddElement(elementSi, 1);
+    sicMaterial->AddElement(elementC, 1);
 
     // 创建几何体
-    auto solidDetector = new G4Box("SiDetector", detXY/2, detXY/2, detThickness/2);
-    auto logicDetector = new G4LogicalVolume(solidDetector, silicon, "SiDetector");
+    auto solidDetector = new G4Box("SiCDetector", detXY/2, detXY/2, detThickness/2);
+    auto logicDetector = new G4LogicalVolume(solidDetector, sicMaterial, "SiCDetector");
 
     // ========================================
     // 设置 UserLimits: 限制最小步长以增加step数据量
@@ -50,19 +55,18 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     logicDetector->SetUserLimits(userLimits);
     G4cout << "==> UserLimits set: Max step length = " << maxStepLength/um << " um" << G4endl;
 
-    // 硅片放置在世界中心
+    // SiC 探测器放置在世界中心
     new G4PVPlacement(0, G4ThreeVector(0, 0, 0),
-                      logicDetector, "SiDetector", fWorldLog, false, 0);
+                      logicDetector, "SiCDetector", fWorldLog, false, 0);
 
     //-------------------------------
-    // 3. 定义敏感探测器（整个硅体为探测区）
+    // 3. 定义敏感探测器（整个 SiC 体为探测区）
     //-------------------------------
     auto sdManager = G4SDManager::GetSDMpointer();
     auto sd_BSE = new BSESensitiveDetector("BSESD");
     sdManager->AddNewDetector(sd_BSE);
-    // 硅体为敏感体
+    // SiC 体为敏感体
     logicDetector->SetSensitiveDetector(sd_BSE);
 
     return physWorld;
 }
-

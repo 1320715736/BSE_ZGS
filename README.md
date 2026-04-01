@@ -1,1 +1,1 @@
-# BSE_ZGS
+这份project用来仿真SiC脉冲相应曲线

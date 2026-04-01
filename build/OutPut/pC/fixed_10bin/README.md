@@ -9,7 +9,7 @@
 
 ## 运行
 ```bash
-cd /home/ubuntu/BSE_ZGS/build/OutPut/fixed_10bin
+cd /home/ubuntu/BSE_XK/build/OutPut/fixed_10bin
 /usr/bin/python3 process_fixed_10bin.py
 ```
 
